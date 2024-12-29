@@ -1,4 +1,5 @@
 from modelos.avaliacao import Avaliacao
+from modelos.cardapio.item_cardapio import ItemCardapio
 
 class Restaurante:
     restaurantes = []
@@ -9,6 +10,7 @@ class Restaurante:
         self._categoria = categoria
         self._ativo = False # _ Informa que o atributo não foi setado pelo usuario
         self._avaliacao = []
+        self._cardapio = []
         Restaurante.restaurantes.append(self)
 
     # Toda vez que fomos printar uma instancia, ele ira apresentar os Strings dessa instancia
@@ -80,3 +82,22 @@ class Restaurante:
         quantidade_de_notas = len(self._avaliacao)
         media_das_notas = round(soma_das_notas / quantidade_de_notas, 1)
         return media_das_notas
+
+    def adicionar_no_cardapio(self, item):
+        # isinstance = metodo que verifica se um item faz parte de uma instancia ou objeto
+        if isinstance(item, ItemCardapio): 
+            self._cardapio.append(item)
+
+    @property # porque eu só quero ler, n quero alterar nem manipular outras informacoes
+    def exibir_cardapio(self):
+        print(f'Cardapio do restaurante: {self._nome}\n')
+        
+        # i recebe um numero que começa do 1, enumerate enumera os itens da lista
+        for i,item in enumerate(self._cardapio, start=1):
+            # se tiver o atributo
+            if hasattr(item, '_descricao'):
+                mensagem = f'{i}. {item._nome} R$ {item._preco:.2f} | {item._descricao}'
+                print(mensagem)
+            else:
+                mensagem = f'{i}. {item._nome} R$ {item._preco:.2f} | {item._tamanho}'
+                print(mensagem)
