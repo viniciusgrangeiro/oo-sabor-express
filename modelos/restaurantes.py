@@ -36,8 +36,9 @@ class Restaurante:
     # Essa função recebe uma avaliação de um cliente e uma nota e cria um objeto Avaliacao,
     # que sera guardado na lista de avaliacao de um objeto Restaurante
     def receber_avaliacao(self, cliente, nota):
-        avaliacao = Avaliacao(cliente, nota)
-        self._avaliacao.append(avaliacao)
+        if 0 < nota <= 5:
+            avaliacao = Avaliacao(cliente, nota)
+            self._avaliacao.append(avaliacao)
 
     # O @property faz com que essa função se torne um atributo, sendo assim
     # podemos chama-lo como um atributo e apresentar as informações que estao contidas nele
@@ -72,7 +73,7 @@ class Restaurante:
     def media_avaliacoes(self):
         # Se não houver avaliações retorna 0
         if not self._avaliacao:
-            return 0 
+            return '-' 
         
         # Soma cada nota de avaliacao deste objeto
         soma_das_notas = sum(avaliacao._nota for avaliacao in self._avaliacao)
